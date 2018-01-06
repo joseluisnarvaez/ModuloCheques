@@ -2,7 +2,6 @@ package cl.starttoken.ModuloCheques.login;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,34 +10,27 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 import cl.starttoken.ModuloCheques.principalJFm.WPrincipal;
+import cl.starttoken.ModuloCheques.sqlite.daos.UsuarioDao;
 import cl.starttoken.ModuloCheques.to.Usuario;
-import cl.starttoken.ModuloCheques.utils.LecturaArchivos;
 
 public class Login extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1263930061903610841L;
-	private JLabel textoPw; // etiqueta o texto no editable
-	private JPasswordField cajaPw; // caja de texto, para insertar datos
+	private JLabel textoPw; 
+	private JPasswordField cajaPw; 
 	private JButton boton;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ArrayList<Usuario> usuarios = null;
-		try {
-			usuarios = LecturaArchivos.getUsuarios();
-		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(this, "No se a podido validar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
 
 		String contraseña = String.valueOf(cajaPw.getPassword());
 		boolean encontrado = false;
-		for (Usuario user : usuarios) {
-			if (user.getContraseña().equals(contraseña)) {
-				encontrado = true;
-				break;
-			}
+		Usuario user = UsuarioDao.obtenerUsuario("user1");
+
+		if (user.getContraseña().equals(contraseña)) {
+			encontrado = true;
 		}
+
 		if (!encontrado) {
 			JOptionPane.showMessageDialog(this, "Contraseña Incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
 		} else {

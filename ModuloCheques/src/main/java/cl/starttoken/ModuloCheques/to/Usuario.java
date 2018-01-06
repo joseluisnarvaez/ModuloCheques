@@ -1,7 +1,8 @@
 package cl.starttoken.ModuloCheques.to;
 
 public class Usuario {
-
+	
+	private int id;
 	private String correo;
 	private String usuario;
 	private String contraseña;
@@ -29,6 +30,14 @@ public class Usuario {
 	public void setContraseña(String contraseña) {
 		this.contraseña = contraseña;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {
@@ -43,6 +52,6 @@ public class Usuario {
 		return builder.toString();
 	}
 	
-	
+
 
 }
