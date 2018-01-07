@@ -11,16 +11,10 @@ public class SQLiteJDBC {
 
 	public static Connection coneccion() {
 		Connection c = null;
-		File baseDatos = new File("c:/moduloCheques/db.db");
-		
+		String nombreArchivo= System.getProperty("user.dir")+"\\ModuloChequesDb\\db.db";
+		File baseDatos = new File(nombreArchivo);
 		if(!baseDatos.exists()) {
-			try {
-				
-				baseDatos.createNewFile();
-			} catch (IOException e) {
-				System.err.println(e.getClass().getName() + ": " + e.getMessage());
-				System.exit(0);
-			}
+			baseDatos.mkdir();	
 		}
 		try {
 			Class.forName("org.sqlite.JDBC");
