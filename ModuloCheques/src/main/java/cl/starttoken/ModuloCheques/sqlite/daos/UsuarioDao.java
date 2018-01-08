@@ -29,7 +29,7 @@ public class UsuarioDao {
 		ResultSet rs = null;
 		Usuario usuario = null;
 		try (Connection conexion = SQLiteJDBC.coneccion();
-			 PreparedStatement st = conexion.prepareStatement("select * from usuarios where contraseña = ?");) {
+			 PreparedStatement st = conexion.prepareStatement("select * from usuarios where usuario = ?");) {
 			st.setString(1, filtro);
 			rs = st.executeQuery();
 			while (rs.next()) {

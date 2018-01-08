@@ -7,23 +7,38 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 public class SQLiteJDBC {
 
 	public static Connection coneccion() {
 		Connection c = null;
 		String nombreArchivo= System.getProperty("user.dir")+"\\ModuloChequesDb\\db.db";
 		File baseDatos = new File(nombreArchivo);
+		boolean existeDb= true;
 		if(!baseDatos.exists()) {
-			baseDatos.mkdir();	
+			try {
+				baseDatos.createNewFile();
+				existeDb = false;
+				
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Error al crear la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+			}	
 		}
 		try {
 			Class.forName("org.sqlite.JDBC");
 			c = DriverManager.getConnection("jdbc:sqlite:"+baseDatos.getAbsolutePath());
+			
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 		System.out.println("Opened database successfully");
+		
+		if(!existeDb){
+			crearTablas(c);
+		}
+		
 		return c;
 	}
 
